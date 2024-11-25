@@ -1,0 +1,22 @@
+{
+    "name": "cmatosbc/daedalus",
+    "description": "Arrays, objects, datra structures for a better PHP coding experience.",
+    "type": "library",
+    "license": "gpl-3.0-or-later",
+    "authors": [
+        {
+            "name": "Carlos Matos",
+            "email": "carlosarturmatos1977@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=8.0",
+        "psr/container": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Daedalus\\": "src/"
+        }
+    }
+}
