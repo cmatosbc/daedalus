@@ -1,8 +1,10 @@
-# Enhanced Array Object
+# Daedalus Enhanced Array Object
 
-A PHP library that provides an enhanced version of PHP's ArrayObject with additional features like type safety, event handling, immutability options, and a PSR-11 compliant dependency injection container.
+Daedalus is a powerful PHP library that provides advanced data structures and utilities for modern PHP applications. At its core, it offers an enhanced version of PHP's ArrayObject with additional features like type safety, event handling, immutability options, and a PSR-11 compliant dependency injection container.
 
-## Why Use Enhanced Array Object?
+The library is designed with a focus on type safety, immutability, and event-driven architecture, making it an ideal choice for building robust and maintainable applications.
+
+## Why Use Daedalus?
 
 This library is particularly useful in scenarios where you need robust array handling with type safety and change tracking. Here are some real-world use cases:
 
@@ -63,9 +65,50 @@ The library combines the power of PHP's ArrayObject with modern programming prac
 composer require daedalus/enhanced-array-object
 ```
 
-## Usage
+## Data Structures
 
-### Basic Usage
+### Dictionary
+
+The `Dictionary` class provides a robust key-value collection with type safety and iteration capabilities. It implements `Iterator`, `Countable`, and `Serializable` interfaces, offering a comprehensive solution for managing key-value pairs.
+
+```php
+use Daedalus\Dictionary;
+
+// Create a new dictionary
+$dict = new Dictionary();
+
+// Add key-value pairs
+$dict->add('name', 'John');
+$dict->add('age', 30);
+
+// Get values
+$name = $dict->get('name'); // Returns 'John'
+
+// Check if key exists
+if ($dict->containsKey('age')) {
+    // Update value
+    $dict->update('age', 31);
+}
+
+// Remove a key
+$dict->remove('name');
+
+// Get all keys or values
+$keys = $dict->keys();    // Returns ['age']
+$values = $dict->values(); // Returns [31]
+
+// Iterate over dictionary
+foreach ($dict as $key => $value) {
+    echo "$key: $value\n";
+}
+
+// Clear all items
+$dict->clear();
+```
+
+### Enhanced Array Object
+
+A PHP library that provides an enhanced version of PHP's ArrayObject with additional features like type safety, event handling, immutability options, and a PSR-11 compliant dependency injection container.
 
 ```php
 use Daedalus\EnhancedArrayObject;
@@ -176,7 +219,7 @@ $immutable[] = 4;
 unset($immutable[0]);
 ```
 
-## Container Usage
+### Container Array Object
 
 The library includes a powerful PSR-11 compliant container with singleton management and automatic dependency injection:
 
