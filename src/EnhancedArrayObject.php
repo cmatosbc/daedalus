@@ -39,8 +39,17 @@ class EnhancedArrayObject extends \ArrayObject
         if (!empty($this->type) && !$value instanceof $this->type) {
             throw new \InvalidArgumentException("Value must be of type {$this->type}");
         }
+        
+        $exists = $this->offsetExists($key);
+        $oldValue = $exists ? $this->offsetGet($key) : null;
+        
         parent::offsetSet($key, $value);
-        $this->triggerEvent('set', $key, $value);
+        
+        if ($exists) {
+            $this->triggerEvent('modify', $key, $oldValue, $value);
+        } else {
+            $this->triggerEvent('add', $key, $value);
+        }
     }
 
     /**
@@ -51,7 +60,7 @@ class EnhancedArrayObject extends \ArrayObject
     public function offsetUnset($key): void 
     {
         parent::offsetUnset($key);
-        $this->triggerEvent('unset', $key);
+        $this->triggerEvent('remove', $key);
     }
 
     /**
@@ -283,5 +292,24 @@ class EnhancedArrayObject extends \ArrayObject
     public function setType(string $type): void
     {
         $this->type = $type;
+    }
+
+    public function __clone()
+    {
+        // Create a new array with cloned objects
+        $array = $this->getArrayCopy();
+        $cloned = array_map(function ($item) {
+            return is_object($item) ? clone $item : $item;
+        }, $array);
+        
+        // Create a new ArrayObject with cloned data
+        $this->exchangeArray($cloned);
+        
+        // Clone event listeners
+        $clonedListeners = [];
+        foreach ($this->eventListeners as $event => $listeners) {
+            $clonedListeners[$event] = $listeners;
+        }
+        $this->eventListeners = $clonedListeners;
     }
 }

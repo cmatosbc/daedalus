@@ -47,18 +47,18 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
         }
 
         try {
-            if (isset($this->instances[$id])) {
+            $definition = $this->offsetGet($id);
+            
+            // For singletons, check if we have a cached instance
+            if ($this->isSingleton($id)) {
+                if (!isset($this->instances[$id])) {
+                    $this->instances[$id] = $this->resolve($definition);
+                }
                 return $this->instances[$id];
             }
-
-            $definition = $this->offsetGet($id);
-            $instance = $this->resolve($definition);
-
-            if ($this->isSingleton($id)) {
-                $this->instances[$id] = $instance;
-            }
-
-            return $instance;
+            
+            // For non-singletons, always resolve fresh
+            return $this->resolve($definition);
         } catch (\Throwable $e) {
             throw new class($e->getMessage(), 0, $e) extends \Exception implements ContainerExceptionInterface {};
         }
@@ -85,7 +85,7 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
     public function singleton(string $id, string|object|callable $concrete): self
     {
         $this->singletons[$id] = true;
-        $this->offsetSet($id, $concrete);
+        $this->bind($id, $concrete);
         return $this;
     }
 
@@ -99,6 +99,9 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
     public function bind(string $id, mixed $concrete): self
     {
         $this->offsetSet($id, $concrete);
+        if (isset($this->instances[$id])) {
+            unset($this->instances[$id]);
+        }
         return $this;
     }
 
@@ -121,6 +124,7 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
     public function clearInstances(): void
     {
         $this->instances = [];
+        // Don't clear singleton registrations, just their instances
     }
 
     /**
@@ -137,7 +141,7 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
         }
 
         if (is_object($concrete)) {
-            return $concrete;
+            return clone $concrete;
         }
 
         if (is_string($concrete) && class_exists($concrete)) {

@@ -14,9 +14,17 @@
         "php": ">=8.0",
         "psr/container": "^2.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
     "autoload": {
         "psr-4": {
             "Daedalus\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Daedalus\\Tests\\": "tests/"
         }
     }
 }
