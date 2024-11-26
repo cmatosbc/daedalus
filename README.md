@@ -4,6 +4,8 @@ Daedalus is a powerful PHP library that provides advanced data structures and ut
 
 The library is designed with a focus on type safety, immutability, and event-driven architecture, making it an ideal choice for building robust and maintainable applications.
 
+License: [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
 ## Why Use Daedalus?
 
 This library is particularly useful in scenarios where you need robust array handling with type safety and change tracking. Here are some real-world use cases:
@@ -58,11 +60,12 @@ The library combines the power of PHP's ArrayObject with modern programming prac
 - PSR-11 compliant dependency injection container
 - Singleton pattern support
 - Automatic dependency resolution
+- C# like Dictionary class
 
 ## Installation
 
 ```bash
-composer require daedalus/enhanced-array-object
+composer require cmatosbc/daedalus
 ```
 
 ## Data Structures
@@ -70,6 +73,33 @@ composer require daedalus/enhanced-array-object
 ### Dictionary
 
 The `Dictionary` class provides a robust key-value collection with type safety and iteration capabilities. It implements `Iterator`, `Countable`, and `Serializable` interfaces, offering a comprehensive solution for managing key-value pairs.
+
+#### Real-World Use Cases
+
+1. Configuration Management
+   - Store application settings with typed values
+   - Manage environment-specific configurations
+   - Handle feature flags and toggles
+
+2. HTTP Headers Management
+   - Store and manipulate HTTP headers
+   - Handle custom header mappings
+   - Normalize header names and values
+
+3. User Session Data
+   - Store user preferences
+   - Manage shopping cart items
+   - Cache user-specific settings
+
+4. Language Localization
+   - Map language keys to translations
+   - Handle multiple locale configurations
+   - Store message templates
+
+5. Cache Implementation
+   - Store computed results with unique keys
+   - Implement memory-efficient caching
+   - Manage cache invalidation
 
 ```php
 use Daedalus\Dictionary;
@@ -105,6 +135,281 @@ foreach ($dict as $key => $value) {
 // Clear all items
 $dict->clear();
 ```
+
+### Set
+
+The `Set` class implements a collection of unique values with standard set operations. It provides methods for union, intersection, difference, and subset operations, making it ideal for mathematical set operations and managing unique collections.
+
+#### Real-World Use Cases
+
+1. User Permissions and Roles
+   - Store user capabilities
+   - Manage role assignments
+   - Calculate effective permissions through set operations
+   - Check required permission sets
+
+2. Social Network Connections
+   - Manage friend lists
+   - Find mutual friends (intersection)
+   - Suggest new connections (difference)
+   - Track group memberships
+
+3. Product Categories and Tags
+   - Manage product classifications
+   - Handle multiple category assignments
+   - Find products with common tags
+   - Calculate related products
+
+4. Event Management
+   - Track event attendees
+   - Manage waiting lists
+   - Find common participants between events
+   - Handle group registrations
+
+5. Data Deduplication
+   - Remove duplicate records
+   - Track unique visitors
+   - Manage email subscription lists
+   - Handle unique identifier collections
+
+```php
+use Daedalus\Set;
+
+// Create new sets
+$set1 = new Set([1, 2, 3]);
+$set2 = new Set([2, 3, 4]);
+
+// Add and remove items
+$set1->add(5);      // Returns true (added)
+$set1->add(1);      // Returns false (already exists)
+$set1->remove(1);   // Returns true (removed)
+$set1->remove(10);  // Returns false (didn't exist)
+
+// Check for existence
+$exists = $set1->contains(2); // Returns true
+
+// Set operations
+$union = $set1->union($set2);        // {2, 3, 4, 5}
+$intersection = $set1->intersection($set2); // {2, 3}
+$difference = $set1->difference($set2);     // {5}
+
+// Check subset relationship
+$isSubset = $set1->isSubsetOf($set2); // Returns false
+
+// Convert to array
+$array = $set1->toArray(); // [2, 3, 5]
+
+// Iterate over set
+foreach ($set1 as $item) {
+    echo $item . "\n";
+}
+
+// Clear all items
+$set1->clear();
+```
+
+The Set class features:
+- Unique value storage
+- Standard set operations (union, intersection, difference)
+- Subset checking
+- Object and scalar value support
+- Iterator implementation for foreach loops
+- Serialization support
+
+### DisjointSet
+
+The `DisjointSet` class extends `Set` to provide an efficient implementation of disjoint sets (union-find data structure) with path compression and union by rank optimizations. It's particularly useful for managing non-overlapping groups and determining connectivity between elements.
+
+#### Real-World Use Cases
+
+1. Social Network Analysis
+   - Track friend groups and communities
+   - Detect connected components in social graphs
+   - Analyze information spread patterns
+   - Identify isolated user clusters
+
+2. Network Infrastructure
+   - Monitor network connectivity
+   - Detect network partitions
+   - Manage redundant connections
+   - Track service dependencies
+
+3. Image Processing
+   - Connected component labeling
+   - Region segmentation
+   - Object detection
+   - Pixel clustering
+
+4. Game Development
+   - Track team/alliance memberships
+   - Manage territory control
+   - Handle resource ownership
+   - Implement faction systems
+
+5. Distributed Systems
+   - Partition management
+   - Cluster state tracking
+   - Service discovery
+   - Consensus group management
+
+```php
+use Daedalus\DisjointSet;
+
+// Create a disjoint set
+$ds = new DisjointSet();
+
+// Create individual sets
+$ds->makeSet("A");
+$ds->makeSet("B");
+$ds->makeSet("C");
+$ds->makeSet("D");
+
+// Join sets together
+$ds->union("A", "B"); // Now A and B are in the same set
+$ds->union("C", "D"); // Now C and D are in the same set
+$ds->union("B", "C"); // Now all elements are in the same set
+
+// Check if elements are connected
+$connected = $ds->connected("A", "D"); // Returns true
+
+// Find the representative element of a set
+$rep = $ds->find("B"); // Returns the set's representative
+
+// Get all elements in the same set
+$set = $ds->getSet("A"); // Returns ["A", "B", "C", "D"]
+
+// Count number of disjoint sets
+$count = $ds->countSets(); // Returns 1
+
+// Clear all sets
+$ds->clear();
+```
+
+The DisjointSet class features:
+- Efficient union and find operations (O(α(n)), where α is the inverse Ackermann function)
+- Path compression optimization
+- Union by rank optimization
+- Set connectivity checking
+- Set membership queries
+- Multiple set management
+
+### HashSet
+
+The `HashSet` class extends `Set` to provide constant-time performance for basic operations. It uses hash-based storage with no guarantee of iteration order, similar to Java's HashSet.
+
+#### Real-World Use Cases
+
+1. Caching Systems
+   - Store cache keys
+   - Track recently accessed items
+   - Manage unique identifiers
+   - Handle session tokens
+
+2. Data Validation
+   - Track processed records
+   - Validate unique entries
+   - Filter duplicate submissions
+   - Check for existing values
+
+3. Analytics and Tracking
+   - Track unique visitors
+   - Monitor unique events
+   - Store distinct metrics
+   - Log unique errors
+
+```php
+use Daedalus\HashSet;
+
+// Create a new HashSet with custom load factor and capacity
+$set = new HashSet([], 0.75, 16);
+
+// Add elements
+$set->add("apple");
+$set->add("banana");
+$set->add("apple"); // Returns false (already exists)
+
+// Bulk operations with another set
+$otherSet = new HashSet(["banana", "cherry"]);
+$set->addAll($otherSet);    // Add all elements from otherSet
+$set->removeAll($otherSet); // Remove all elements that exist in otherSet
+$set->retainAll($otherSet); // Keep only elements that exist in otherSet
+
+// Check contents
+$exists = $set->contains("apple"); // Returns true
+$count = $set->count();           // Get number of elements
+
+// Convert to array (no guaranteed order)
+$array = $set->toArray();
+
+// Clear the set
+$set->clear();
+```
+
+### TreeSet
+
+The `TreeSet` class implements a self-balancing binary search tree (AVL tree) that maintains elements in sorted order, similar to Java's TreeSet.
+
+#### Real-World Use Cases
+
+1. Ranking Systems
+   - Leaderboard management
+   - Score tracking
+   - Priority queues
+   - Tournament rankings
+
+2. Time-based Operations
+   - Event scheduling
+   - Task prioritization
+   - Deadline management
+   - Log entry ordering
+
+3. Range Queries
+   - Price range searches
+   - Date range filtering
+   - Numeric range queries
+   - Version management
+
+```php
+use Daedalus\TreeSet;
+
+// Create a new TreeSet
+$set = new TreeSet([3, 1, 4, 1, 5]); // Duplicates are automatically removed
+
+// Add elements (maintains order)
+$set->add(2);
+$set->add(6);
+
+// Access ordered elements
+$first = $set->first(); // Get smallest element (1)
+$last = $set->last();   // Get largest element (6)
+
+// Find adjacent elements
+$lower = $set->lower(4);  // Get largest element < 4 (3)
+$higher = $set->higher(4); // Get smallest element > 4 (5)
+
+// Check contents
+$exists = $set->contains(3); // Returns true
+$count = $set->count();      // Get number of elements
+
+// Convert to sorted array
+$array = $set->toArray(); // [1, 2, 3, 4, 5, 6]
+
+// Iterate in order
+foreach ($set as $element) {
+    echo $element . "\n";
+}
+
+// Clear the set
+$set->clear();
+```
+
+The TreeSet class features:
+- Ordered element storage
+- Logarithmic-time operations (O(log n))
+- Efficient range operations
+- Natural ordering for scalar types
+- Custom ordering via __toString for objects
+- AVL tree self-balancing
 
 ### Enhanced Array Object
 
@@ -351,4 +656,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This library is licensed under the MIT License - see the LICENSE file for details.
+This library is licensed under the GNU General Public License v3.0 - see the LICENSE file for details.
