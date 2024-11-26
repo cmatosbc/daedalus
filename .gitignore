@@ -1,0 +1,42 @@
+# Composer
+/vendor/
+composer.lock
+
+# PHPUnit
+/phpunit.xml.dist
+/.phpunit.result.cache
+/.phpunit.cache/
+/coverage/
+/coverage.xml
+
+# PHP CS Fixer
+/.php_cs
+/.php_cs.cache
+/.php-cs-fixer.cache
+
+# IDE & System Files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# Backup Files
+*.bak
+*.swp
+*~
+
+# Cache and Logs
+/var/
+/log/
+*.log
+
+# Build artifacts
+/build/
+/dist/
