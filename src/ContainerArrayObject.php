@@ -39,8 +39,9 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
     public function get(string $id): mixed
     {
         if (!$this->has($id)) {
-            throw new class($id) extends \Exception implements NotFoundExceptionInterface {
-                public function __construct(string $id) {
+            throw new class ($id) extends \Exception implements NotFoundExceptionInterface {
+                public function __construct(string $id)
+                {
                     parent::__construct("No entry was found for identifier: $id");
                 }
             };
@@ -48,7 +49,7 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
 
         try {
             $definition = $this->offsetGet($id);
-            
+
             // For singletons, check if we have a cached instance
             if ($this->isSingleton($id)) {
                 if (!isset($this->instances[$id])) {
@@ -56,11 +57,12 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
                 }
                 return $this->instances[$id];
             }
-            
+
             // For non-singletons, always resolve fresh
             return $this->resolve($definition);
         } catch (\Throwable $e) {
-            throw new class($e->getMessage(), 0, $e) extends \Exception implements ContainerExceptionInterface {};
+            throw new class ($e->getMessage(), 0, $e) extends \Exception implements ContainerExceptionInterface {
+            };
         }
     }
 
@@ -161,13 +163,13 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
     private function buildClass(string $class): object
     {
         $reflector = new \ReflectionClass($class);
-        
+
         if (!$reflector->isInstantiable()) {
             throw new \Exception("Class $class is not instantiable");
         }
 
         $constructor = $reflector->getConstructor();
-        
+
         if (is_null($constructor)) {
             return new $class();
         }
@@ -190,7 +192,7 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
 
         foreach ($parameters as $parameter) {
             $type = $parameter->getType();
-            
+
             if (!$type instanceof \ReflectionNamedType || $type->isBuiltin()) {
                 if ($parameter->isDefaultValueAvailable()) {
                     $dependencies[] = $parameter->getDefaultValue();

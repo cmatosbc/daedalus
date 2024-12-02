@@ -45,7 +45,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
         $this->loadFactor = $loadFactor;
         $this->capacity = $initialCapacity;
         $this->initializeBuckets();
-        
+
         foreach ($items as $item) {
             $this->add($item);
         }
@@ -180,18 +180,18 @@ class HashSet implements \Iterator, \Countable, \Serializable
     {
         $modified = false;
         $toRemove = [];
-        
+
         foreach ($this->toArray() as $item) {
             if (!$other->contains($item)) {
                 $toRemove[] = $item;
                 $modified = true;
             }
         }
-        
+
         foreach ($toRemove as $item) {
             $this->remove($item);
         }
-        
+
         return $modified;
     }
 
@@ -420,9 +420,11 @@ class HashSet implements \Iterator, \Countable, \Serializable
     private function findNextNonEmptyBucket(): ?array
     {
         while ($this->currentBucket < $this->capacity) {
-            if (isset($this->buckets[$this->currentBucket]) &&
+            if (
+                isset($this->buckets[$this->currentBucket]) &&
                 !empty($this->buckets[$this->currentBucket]) &&
-                $this->positionInBucket < count($this->buckets[$this->currentBucket])) {
+                $this->positionInBucket < count($this->buckets[$this->currentBucket])
+            ) {
                 return $this->buckets[$this->currentBucket];
             }
             $this->currentBucket++;

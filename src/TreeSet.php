@@ -19,7 +19,7 @@ class TreeSet implements Iterator, Countable, Serializable
 {
     /** @var TreeNode|null Root node of the tree */
     private ?TreeNode $root = null;
-    
+
     /** @var int Number of elements in the set */
     private int $size = 0;
 

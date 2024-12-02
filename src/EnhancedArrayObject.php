@@ -11,7 +11,7 @@ class EnhancedArrayObject extends \ArrayObject
 {
     /** @var string Type constraint for array elements */
     private string $type;
-    
+
     /** @var array Array of event listeners */
     private array $eventListeners = [];
 
@@ -39,12 +39,12 @@ class EnhancedArrayObject extends \ArrayObject
         if (!empty($this->type) && !$value instanceof $this->type) {
             throw new \InvalidArgumentException("Value must be of type {$this->type}");
         }
-        
+
         $exists = $this->offsetExists($key);
         $oldValue = $exists ? $this->offsetGet($key) : null;
-        
+
         parent::offsetSet($key, $value);
-        
+
         if ($exists) {
             $this->triggerEvent('modify', $key, $oldValue, $value);
         } else {
@@ -119,10 +119,10 @@ class EnhancedArrayObject extends \ArrayObject
      * @param callable|null $comparisonFunction Optional custom comparison function
      * @return self New instance with sorted elements
      */
-    public function sort(callable $comparisonFunction = null): self {
-        $array = (array) $this;
-        if ($comparisonFunction)
+    public function sort(callable $comparisonFunction = null): self
     {
+        $array = (array) $this;
+        if ($comparisonFunction) {
             usort($array, $comparisonFunction);
         } else {
             sort($array);
@@ -148,7 +148,7 @@ class EnhancedArrayObject extends \ArrayObject
         $this->triggerEvent('search');
         return $results;
     }
-    
+
     /**
      * Inserts multiple elements at once
      *
@@ -301,10 +301,10 @@ class EnhancedArrayObject extends \ArrayObject
         $cloned = array_map(function ($item) {
             return is_object($item) ? clone $item : $item;
         }, $array);
-        
+
         // Create a new ArrayObject with cloned data
         $this->exchangeArray($cloned);
-        
+
         // Clone event listeners
         $clonedListeners = [];
         foreach ($this->eventListeners as $event => $listeners) {
