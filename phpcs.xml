@@ -7,8 +7,9 @@
     <exclude-pattern>./vendor</exclude-pattern>
 
     <!-- Define the coding standard -->
-    <rule ref="PSR12">
-        <!-- Customizations to ignore whitespace errors -->
-        <exclude name="Squiz.WhiteSpace.SuperfluousWhitespace.EndLine"/>
-    </rule>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
+  <properties>
+    <property name="ignoreBlankLines" value="true"/>
+  </properties>
+</rule>
 </ruleset>
