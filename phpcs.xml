@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ruleset name="Custom PHPCS Configuration">
+    <description>PHP_CodeSniffer configuration for PHP 8.2+</description>
+
+    <!-- Paths to include or exclude from the analysis -->
+    <file>./src</file>
+    <exclude-pattern>./vendor</exclude-pattern>
+
+    <!-- Define the coding standard -->
+    <rule ref="PSR12">
+        <!-- Customizations -->
+        <exclude name="Generic.WhiteSpace.DisallowTabIndent"/>
+        <exclude name="Generic.WhiteSpace.ScopeIndent"/>
+    </rule>
+</ruleset>
