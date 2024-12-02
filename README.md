@@ -1,6 +1,6 @@
 # Daedalus
 
-[![PHPUnit Tests](https://github.com/cmatosbc/daedalus/actions/workflows/phpunit.yml/badge.svg)](https://github.com/cmatosbc/daedalus/actions/workflows/phpunit.yml) [![PHP Composer](https://github.com/cmatosbc/daedalus/actions/workflows/composer.yml/badge.svg)](https://github.com/cmatosbc/daedalus/actions/workflows/composer.yml)
+[![PHPUnit Tests](https://github.com/cmatosbc/daedalus/actions/workflows/phpunit.yml/badge.svg)](https://github.com/cmatosbc/daedalus/actions/workflows/phpunit.yml) [![PHP Composer](https://github.com/cmatosbc/daedalus/actions/workflows/composer.yml/badge.svg)](https://github.com/cmatosbc/daedalus/actions/workflows/composer.yml) [![PHP Lint](https://github.com/cmatosbc/daedalus/actions/workflows/lint.yml/badge.svg)](https://github.com/cmatosbc/daedalus/actions/workflows/lint.yml)
 
 Daedalus is a powerful PHP library that provides advanced data structures and utilities for modern PHP applications. At its core, it offers an enhanced version of PHP's ArrayObject with additional features like type safety, event handling, immutability options, and a PSR-11 compliant dependency injection container.
 
