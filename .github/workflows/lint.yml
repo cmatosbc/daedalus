@@ -1,0 +1,43 @@
+name: PHP Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: ['8.2']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+
+    - name: Install PHP_CodeSniffer
+      run: composer global require "squizlabs/php_codesniffer=*"
+
+    - name: Run PHP_CodeSniffer
+      run: ~/.composer/vendor/bin/phpcs --standard=PSR12 .
+
+    - name: Upload PHP_CodeSniffer results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: phpcs-results
+        path: phpcs.xml
+
+    - name: Display PHP_CodeSniffer results
+      if: always()
+      run: cat phpcs.xml
