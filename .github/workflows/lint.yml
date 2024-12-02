@@ -29,7 +29,7 @@ jobs:
       run: composer global require "squizlabs/php_codesniffer=*"
 
     - name: Run PHP_CodeSniffer
-      run: ~/.composer/vendor/bin/phpcs --standard=PSR12 .
+      run: ~/.composer/vendor/bin/phpcs
 
     - name: Upload PHP_CodeSniffer results
       if: always()
