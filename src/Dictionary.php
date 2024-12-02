@@ -9,9 +9,9 @@ use Iterator;
 
 /**
  * Dictionary implementation with Iterator, Countable, and Serializable interfaces
- * 
+ *
  * Provides a key-value collection with standard dictionary operations and iteration capabilities.
- * 
+ *
  * @package Daedalus
  */
 class Dictionary implements Iterator, Countable, Serializable
@@ -24,7 +24,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Adds a key-value pair to the dictionary
-     * 
+     *
      * @param mixed $key   The key to add
      * @param mixed $value The value to associate with the key
      * @throws Exception If the key already exists
@@ -39,7 +39,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Gets a value by its key
-     * 
+     *
      * @param mixed $key The key to look up
      * @return mixed The value associated with the key
      * @throws Exception If the key doesn't exist
@@ -54,7 +54,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Removes a key-value pair from the dictionary
-     * 
+     *
      * @param mixed $key The key to remove
      * @throws Exception If the key doesn't exist
      */
@@ -68,7 +68,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Updates a value for an existing key
-     * 
+     *
      * @param mixed $key   The key to update
      * @param mixed $value The new value
      * @throws Exception If the key doesn't exist
@@ -83,7 +83,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Checks if a key exists in the dictionary
-     * 
+     *
      * @param mixed $key The key to check
      * @return bool True if the key exists, false otherwise
      */
@@ -94,7 +94,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Gets all keys in the dictionary
-     * 
+     *
      * @return array List of all keys
      */
     public function keys(): ?array
@@ -104,7 +104,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Gets all values in the dictionary
-     * 
+     *
      * @return array List of all values
      */
     public function values(): ?array
@@ -122,7 +122,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Gets the current value during iteration
-     * 
+     *
      * @return mixed The current value
      */
     public function current()
@@ -132,7 +132,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Gets the current key during iteration
-     * 
+     *
      * @return mixed The current key
      */
     public function key()
@@ -158,7 +158,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Checks if the current position is valid
-     * 
+     *
      * @return bool True if the position is valid, false otherwise
      */
     public function valid(): bool
@@ -168,7 +168,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Gets the count of items in the dictionary
-     * 
+     *
      * @return int The number of items
      */
     public function count(): int
@@ -178,7 +178,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Serializes the dictionary to a string
-     * 
+     *
      * @return string The serialized dictionary
      */
     public function serialize(): string
@@ -188,7 +188,7 @@ class Dictionary implements Iterator, Countable, Serializable
 
     /**
      * Unserializes a string back into a dictionary
-     * 
+     *
      * @param string $data The serialized dictionary data
      */
     public function unserialize(string $data)

@@ -4,10 +4,10 @@ namespace Daedalus;
 
 /**
  * DisjointSet implementation that extends Set with Union-Find operations
- * 
+ *
  * Provides efficient operations for maintaining disjoint (non-overlapping) sets
  * with union by rank and path compression optimizations.
- * 
+ *
  * @package Daedalus
  */
 class DisjointSet extends Set
@@ -20,7 +20,7 @@ class DisjointSet extends Set
 
     /**
      * Constructor
-     * 
+     *
      * @param array $items Initial items for the disjoint sets
      */
     public function __construct(array $items = [])
@@ -33,7 +33,7 @@ class DisjointSet extends Set
 
     /**
      * Creates a new set containing only the specified item
-     * 
+     *
      * @param mixed $item The item to create a set for
      * @return bool True if the set was created, false if item already exists
      */
@@ -55,10 +55,10 @@ class DisjointSet extends Set
 
     /**
      * Finds the representative element of the set containing the item
-     * 
+     *
      * Implements path compression: all nodes along the path to the root
      * are made to point directly to the root.
-     * 
+     *
      * @param mixed $item The item to find the representative for
      * @return mixed|null The representative item, or null if item doesn't exist
      */
@@ -79,10 +79,10 @@ class DisjointSet extends Set
 
     /**
      * Merges the sets containing the two items
-     * 
+     *
      * Implements union by rank: the root with higher rank becomes the parent.
      * If ranks are equal, the second root becomes parent and its rank increases.
-     * 
+     *
      * @param mixed $item1 First item
      * @param mixed $item2 Second item
      * @return bool True if sets were merged, false if items don't exist or are already in same set
@@ -111,7 +111,7 @@ class DisjointSet extends Set
 
     /**
      * Checks if two items are in the same set
-     * 
+     *
      * @param mixed $item1 First item
      * @param mixed $item2 Second item
      * @return bool True if items are in the same set, false otherwise
@@ -126,7 +126,7 @@ class DisjointSet extends Set
 
     /**
      * Gets all items in the same set as the given item
-     * 
+     *
      * @param mixed $item The item to get the set for
      * @return array Array of items in the same set
      */
@@ -150,7 +150,7 @@ class DisjointSet extends Set
 
     /**
      * Gets the number of disjoint sets
-     * 
+     *
      * @return int Number of disjoint sets
      */
     public function countSets(): int
@@ -176,7 +176,7 @@ class DisjointSet extends Set
 
     /**
      * Gets an item by its hash
-     * 
+     *
      * @param string $hash The hash to look up
      * @return mixed The item with the given hash
      */

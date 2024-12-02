@@ -4,7 +4,7 @@ namespace Daedalus;
 
 /**
  * Enhanced implementation of PHP's ArrayObject with type safety and event handling
- * 
+ *
  * @package Daedalus
  */
 class EnhancedArrayObject extends \ArrayObject
@@ -17,7 +17,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Constructor
-     * 
+     *
      * @param array  $array Initial array of elements
      * @param string $type  Class name for type constraint
      */
@@ -29,7 +29,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Sets an element in the array
-     * 
+     *
      * @param mixed $key   The array key
      * @param mixed $value The value to set
      * @throws \InvalidArgumentException If type constraint is violated
@@ -54,10 +54,10 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Removes an element from the array
-     * 
+     *
      * @param mixed $key The array key to unset
      */
-    public function offsetUnset($key): void 
+    public function offsetUnset($key): void
     {
         parent::offsetUnset($key);
         $this->triggerEvent('remove', $key);
@@ -65,11 +65,11 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Maps elements using a callback function
-     * 
+     *
      * @param callable $callback Function to apply to each element
      * @return self New instance with mapped elements
      */
-    public function map(callable $callback): self 
+    public function map(callable $callback): self
     {
         $array = array_map($callback, (array) $this);
         $this->triggerEvent('map');
@@ -78,11 +78,11 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Filters elements using a callback function
-     * 
+     *
      * @param callable $callback Function to filter elements
      * @return self New instance with filtered elements
      */
-    public function filter(callable $callback): self 
+    public function filter(callable $callback): self
     {
         $array = array_filter((array) $this, $callback);
         $this->triggerEvent('filter');
@@ -91,12 +91,12 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Reduces array to a single value
-     * 
+     *
      * @param callable $callback Reduction function
      * @param mixed   $initial  Initial value
      * @return mixed The reduced value
      */
-    public function reduce(callable $callback, $initial) 
+    public function reduce(callable $callback, $initial)
     {
         $result = array_reduce((array) $this, $callback, $initial);
         $this->triggerEvent('reduce');
@@ -105,23 +105,23 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Creates an immutable version of this array
-     * 
+     *
      * @return ImmutableArrayObject
      */
-    public function toImmutable(): ImmutableArrayObject 
+    public function toImmutable(): ImmutableArrayObject
     {
         return new ImmutableArrayObject((array) $this, $this->type);
     }
 
     /**
      * Sorts the array
-     * 
+     *
      * @param callable|null $comparisonFunction Optional custom comparison function
      * @return self New instance with sorted elements
      */
     public function sort(callable $comparisonFunction = null): self {
         $array = (array) $this;
-        if ($comparisonFunction) 
+        if ($comparisonFunction)
     {
             usort($array, $comparisonFunction);
         } else {
@@ -133,7 +133,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Searches for elements using a callback function
-     * 
+     *
      * @param callable $callback Search predicate
      * @return array Array of matching elements
      */
@@ -151,7 +151,7 @@ class EnhancedArrayObject extends \ArrayObject
     
     /**
      * Inserts multiple elements at once
-     * 
+     *
      * @param array $elements Elements to insert
      */
     public function bulkInsert(array $elements): void
@@ -164,7 +164,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Adds an event listener for a specific event
-     * 
+     *
      * @param string   $event    Event name
      * @param callable $listener Listener callback
      */
@@ -178,7 +178,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Removes an event listener for a specific event
-     * 
+     *
      * @param string   $event    Event name
      * @param callable $listener Listener callback to remove
      * @return bool True if listener was removed, false if not found
@@ -203,7 +203,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Triggers event listeners for a specific event
-     * 
+     *
      * @param string $event Event name
      * @param mixed  ...$args Event arguments
      */
@@ -218,7 +218,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Checks if the array is empty
-     * 
+     *
      * @return bool True if the array is empty, false otherwise
      */
     public function isEmpty(): bool
@@ -228,7 +228,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Merges another array or ArrayObject into this one
-     * 
+     *
      * @param array|\ArrayObject $array Array to merge
      * @return self New instance with merged elements
      * @throws \InvalidArgumentException If type constraint is violated
@@ -258,15 +258,15 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Creates a deep clone of the array object
-     * 
+     *
      * @return self New instance with cloned elements
      */
     public function cloneDeep(): self
     {
         $array = $this->getArrayCopy();
         $cloned = array_map(function ($item) {
-            return is_object($item) && method_exists($item, '__clone') 
-                ? clone $item 
+            return is_object($item) && method_exists($item, '__clone')
+                ? clone $item
                 : $item;
         }, $array);
 
@@ -276,7 +276,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Gets the current type constraint
-     * 
+     *
      * @return string Current type constraint
      */
     public function getType(): string
@@ -286,7 +286,7 @@ class EnhancedArrayObject extends \ArrayObject
 
     /**
      * Sets the type constraint
-     * 
+     *
      * @param string $type New type constraint
      */
     public function setType(string $type): void

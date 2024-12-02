@@ -4,10 +4,10 @@ namespace Daedalus;
 
 /**
  * HashSet implementation with hash-based storage and collision handling
- * 
+ *
  * Provides constant-time O(1) performance for basic operations (add, remove, contains)
  * using hash buckets for collision handling. No guarantee on iteration order.
- * 
+ *
  * @package Daedalus
  */
 class HashSet implements \Iterator, \Countable, \Serializable
@@ -32,14 +32,14 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Constructor
-     * 
+     *
      * @param array $items Initial items for the set
      * @param float $loadFactor Maximum load factor (default: 0.75)
      * @param int $initialCapacity Initial capacity (default: 16)
      */
     public function __construct(
-        array $items = [], 
-        float $loadFactor = 0.75, 
+        array $items = [],
+        float $loadFactor = 0.75,
         int $initialCapacity = 16
     ) {
         $this->loadFactor = $loadFactor;
@@ -53,7 +53,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Adds an item to the set
-     * 
+     *
      * @param mixed $item The item to add
      * @return bool True if the item was added, false if it already existed
      */
@@ -83,7 +83,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Removes an item from the set
-     * 
+     *
      * @param mixed $item The item to remove
      * @return bool True if the item was removed, false if it didn't exist
      */
@@ -114,7 +114,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Checks if an item exists in the set
-     * 
+     *
      * @param mixed $item The item to check
      * @return bool True if the item exists, false otherwise
      */
@@ -138,7 +138,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Adds all items from another set to this set
-     * 
+     *
      * @param HashSet $other The other set
      * @return bool True if any items were added
      */
@@ -155,7 +155,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Removes all items that exist in another set
-     * 
+     *
      * @param HashSet $other The other set
      * @return bool True if any items were removed
      */
@@ -172,7 +172,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Retains only items that exist in another set
-     * 
+     *
      * @param HashSet $other The other set
      * @return bool True if any items were removed
      */
@@ -197,7 +197,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Converts the set to an array
-     * 
+     *
      * @return array Array containing all items
      */
     public function toArray(): array
@@ -223,7 +223,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Gets the current value during iteration
-     * 
+     *
      * @return mixed The current value
      */
     public function current(): mixed
@@ -234,7 +234,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Gets the current key during iteration
-     * 
+     *
      * @return int The current position
      */
     public function key(): int
@@ -270,7 +270,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Checks if the current position is valid
-     * 
+     *
      * @return bool True if the position is valid
      */
     public function valid(): bool
@@ -280,7 +280,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Gets the count of items in the set
-     * 
+     *
      * @return int The number of items
      */
     public function count(): int
@@ -290,7 +290,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Serializes the set to a string
-     * 
+     *
      * @return string The serialized set
      */
     public function serialize(): string
@@ -305,7 +305,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Unserializes a string back into a set
-     * 
+     *
      * @param string $data The serialized set data
      */
     public function unserialize(string $data): void
@@ -319,7 +319,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Gets the load factor
-     * 
+     *
      * @return float Current load factor
      */
     public function getLoadFactor(): float
@@ -329,7 +329,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Gets the current capacity
-     * 
+     *
      * @return int Current capacity
      */
     public function getCapacity(): int
@@ -347,7 +347,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Checks if rehashing is needed
-     * 
+     *
      * @return bool True if rehashing is needed
      */
     private function shouldRehash(): bool
@@ -374,7 +374,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Gets the bucket index for a hash
-     * 
+     *
      * @param string $hash The hash value
      * @return int Bucket index
      */
@@ -385,7 +385,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Generates a hash for an item
-     * 
+     *
      * @param mixed $item The item to hash
      * @return string The hash value
      */
@@ -399,7 +399,7 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Compares two items for equality
-     * 
+     *
      * @param mixed $a First item
      * @param mixed $b Second item
      * @return bool True if items are equal
@@ -414,14 +414,14 @@ class HashSet implements \Iterator, \Countable, \Serializable
 
     /**
      * Finds the next non-empty bucket for iteration
-     * 
+     *
      * @return array|null The bucket or null if none found
      */
     private function findNextNonEmptyBucket(): ?array
     {
         while ($this->currentBucket < $this->capacity) {
-            if (isset($this->buckets[$this->currentBucket]) && 
-                !empty($this->buckets[$this->currentBucket]) && 
+            if (isset($this->buckets[$this->currentBucket]) &&
+                !empty($this->buckets[$this->currentBucket]) &&
                 $this->positionInBucket < count($this->buckets[$this->currentBucket])) {
                 return $this->buckets[$this->currentBucket];
             }

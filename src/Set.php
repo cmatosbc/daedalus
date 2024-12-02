@@ -9,10 +9,10 @@ use Serializable;
 
 /**
  * Set implementation with Iterator, Countable, and Serializable interfaces
- * 
+ *
  * Provides a collection of unique values with standard set operations like union,
  * intersection, and difference.
- * 
+ *
  * @package Daedalus
  */
 class Set implements Iterator, Countable, Serializable
@@ -25,7 +25,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Constructor
-     * 
+     *
      * @param array $items Initial items for the set
      */
     public function __construct(array $items = [])
@@ -37,7 +37,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Adds an item to the set
-     * 
+     *
      * @param mixed $item The item to add
      * @return bool True if the item was added, false if it already existed
      */
@@ -53,7 +53,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Removes an item from the set
-     * 
+     *
      * @param mixed $item The item to remove
      * @return bool True if the item was removed, false if it didn't exist
      */
@@ -69,7 +69,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Checks if an item exists in the set
-     * 
+     *
      * @param mixed $item The item to check
      * @return bool True if the item exists, false otherwise
      */
@@ -80,7 +80,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Returns the union of this set with another set
-     * 
+     *
      * @param Set $other The other set
      * @return Set A new set containing all items from both sets
      */
@@ -98,7 +98,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Returns the intersection of this set with another set
-     * 
+     *
      * @param Set $other The other set
      * @return Set A new set containing items present in both sets
      */
@@ -115,7 +115,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Returns the difference of this set with another set
-     * 
+     *
      * @param Set $other The other set
      * @return Set A new set containing items present in this set but not in the other
      */
@@ -132,7 +132,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Checks if this set is a subset of another set
-     * 
+     *
      * @param Set $other The other set
      * @return bool True if this set is a subset of the other set
      */
@@ -148,7 +148,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Converts the set to an array
-     * 
+     *
      * @return array Array containing all items in the set
      */
     public function toArray(): array
@@ -166,7 +166,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Gets the current value during iteration
-     * 
+     *
      * @return mixed The current value
      */
     public function current(): mixed
@@ -176,7 +176,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Gets the current key during iteration
-     * 
+     *
      * @return int The current position
      */
     public function key(): int
@@ -202,7 +202,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Checks if the current position is valid
-     * 
+     *
      * @return bool True if the position is valid, false otherwise
      */
     public function valid(): bool
@@ -212,7 +212,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Gets the count of items in the set
-     * 
+     *
      * @return int The number of items
      */
     public function count(): int
@@ -222,7 +222,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Serializes the set to a string
-     * 
+     *
      * @return string The serialized set
      */
     public function serialize(): string
@@ -232,7 +232,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Unserializes a string back into a set
-     * 
+     *
      * @param string $data The serialized set data
      */
     public function unserialize(string $data): void
@@ -242,7 +242,7 @@ class Set implements Iterator, Countable, Serializable
 
     /**
      * Generates a hash for an item
-     * 
+     *
      * @param mixed $item The item to hash
      * @return string The hash value
      */

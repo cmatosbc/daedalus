@@ -9,10 +9,10 @@ use Daedalus\TreeNode;
 
 /**
  * TreeSet implementation using a self-balancing binary search tree
- * 
+ *
  * Provides ordered storage and logarithmic-time performance for basic operations.
  * Elements must be comparable (implement __toString or be scalar types).
- * 
+ *
  * @package Daedalus
  */
 class TreeSet implements Iterator, Countable, Serializable
@@ -31,7 +31,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Constructor
-     * 
+     *
      * @param array $items Initial items for the set
      */
     public function __construct(array $items = [])
@@ -43,7 +43,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Adds an item to the set
-     * 
+     *
      * @param mixed $item The item to add
      * @return bool True if the item was added, false if it already existed
      */
@@ -61,7 +61,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Removes an item from the set
-     * 
+     *
      * @param mixed $item The item to remove
      * @return bool True if the item was removed, false if it didn't exist
      */
@@ -79,7 +79,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Checks if an item exists in the set
-     * 
+     *
      * @param mixed $item The item to check
      * @return bool True if the item exists, false otherwise
      */
@@ -90,7 +90,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the first (smallest) item in the set
-     * 
+     *
      * @return mixed|null The first item, or null if set is empty
      */
     public function first(): mixed
@@ -108,7 +108,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the last (largest) item in the set
-     * 
+     *
      * @return mixed|null The last item, or null if set is empty
      */
     public function last(): mixed
@@ -126,7 +126,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the item less than the given item
-     * 
+     *
      * @param mixed $item The reference item
      * @return mixed|null The lower item, or null if none exists
      */
@@ -150,7 +150,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the item greater than the given item
-     * 
+     *
      * @param mixed $item The reference item
      * @return mixed|null The higher item, or null if none exists
      */
@@ -174,7 +174,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Converts the set to an array
-     * 
+     *
      * @return array Sorted array of all items
      */
     public function toArray(): array
@@ -194,7 +194,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the current value during iteration
-     * 
+     *
      * @return mixed The current value
      */
     public function current(): mixed
@@ -204,7 +204,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the current key during iteration
-     * 
+     *
      * @return int The current position
      */
     public function key(): int
@@ -230,7 +230,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Checks if the current position is valid
-     * 
+     *
      * @return bool True if the position is valid, false otherwise
      */
     public function valid(): bool
@@ -240,7 +240,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the count of items in the set
-     * 
+     *
      * @return int The number of items
      */
     public function count(): int
@@ -250,7 +250,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Serializes the set to a string
-     * 
+     *
      * @return string The serialized set
      */
     public function serialize(): string
@@ -262,7 +262,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Unserializes a string back into a set
-     * 
+     *
      * @param string $data The serialized set data
      */
     public function unserialize(string $data): void
@@ -276,7 +276,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Compares two items
-     * 
+     *
      * @param mixed $a First item
      * @param mixed $b Second item
      * @return int Negative if a < b, 0 if equal, positive if a > b
@@ -291,7 +291,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Inserts a node into the tree
-     * 
+     *
      * @param TreeNode|null $node Current node
      * @param mixed $item Item to insert
      * @return TreeNode New or updated node
@@ -314,7 +314,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Removes a node from the tree
-     * 
+     *
      * @param TreeNode|null $node Current node
      * @param mixed $item Item to remove
      * @return TreeNode|null New or updated node
@@ -347,7 +347,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Finds a node in the tree
-     * 
+     *
      * @param TreeNode|null $node Current node
      * @param mixed $item Item to find
      * @return TreeNode|null Found node or null
@@ -369,7 +369,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Finds the minimum node in a subtree
-     * 
+     *
      * @param TreeNode $node Root of subtree
      * @return TreeNode Minimum node
      */
@@ -383,7 +383,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the height of a node
-     * 
+     *
      * @param TreeNode|null $node The node
      * @return int Height of the node
      */
@@ -394,7 +394,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Updates the height of a node
-     * 
+     *
      * @param TreeNode $node The node to update
      */
     private function updateHeight(TreeNode $node): void
@@ -404,7 +404,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Gets the balance factor of a node
-     * 
+     *
      * @param TreeNode $node The node
      * @return int Balance factor
      */
@@ -415,7 +415,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Performs a right rotation
-     * 
+     *
      * @param TreeNode $y Root node
      * @return TreeNode New root after rotation
      */
@@ -435,7 +435,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Performs a left rotation
-     * 
+     *
      * @param TreeNode $x Root node
      * @return TreeNode New root after rotation
      */
@@ -455,7 +455,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Balances a node
-     * 
+     *
      * @param TreeNode $node Node to balance
      * @return TreeNode Balanced node
      */
@@ -494,7 +494,7 @@ class TreeSet implements Iterator, Countable, Serializable
 
     /**
      * Performs an inorder traversal of the tree
-     * 
+     *
      * @param TreeNode|null $node Current node
      */
     private function inorderTraversal(?TreeNode $node): void

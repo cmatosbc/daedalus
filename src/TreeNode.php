@@ -4,10 +4,10 @@ namespace Daedalus;
 
 /**
  * Internal node class for binary search tree implementations
- * 
+ *
  * Used by TreeSet and other tree-based data structures to store values
  * and maintain tree structure.
- * 
+ *
  * @package Daedalus
  * @internal This class is not part of the public API
  */
@@ -27,7 +27,7 @@ class TreeNode
 
     /**
      * Constructor
-     * 
+     *
      * @param mixed $value Value to store in the node
      */
     public function __construct(mixed $value)

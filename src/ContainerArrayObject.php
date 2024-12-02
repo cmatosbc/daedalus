@@ -20,7 +20,7 @@ class ContainerArrayObject extends EnhancedArrayObject implements ContainerInter
 
     /**
      * Constructor
-     * 
+     *
      * @param array $definitions Initial container definitions
      */
     public function __construct(array $definitions = [])
