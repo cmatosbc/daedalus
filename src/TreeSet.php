@@ -4,7 +4,6 @@ namespace Daedalus;
 
 use Iterator;
 use Countable;
-use Serializable;
 use Daedalus\TreeNode;
 
 /**
@@ -15,7 +14,7 @@ use Daedalus\TreeNode;
  *
  * @package Daedalus
  */
-class TreeSet implements Iterator, Countable, Serializable
+class TreeSet implements Iterator, Countable
 {
     /** @var TreeNode|null Root node of the tree */
     private ?TreeNode $root = null;

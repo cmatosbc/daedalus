@@ -10,7 +10,7 @@ namespace Daedalus;
  *
  * @package Daedalus
  */
-class HashSet implements \Iterator, \Countable, \Serializable
+class HashSet implements \Iterator, \Countable
 {
     /** @var array[] Array of buckets for hash collisions */
     private array $buckets = [];

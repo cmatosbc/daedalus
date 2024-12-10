@@ -413,6 +413,113 @@ The TreeSet class features:
 - Custom ordering via __toString for objects
 - AVL tree self-balancing
 
+### Matrix
+
+The `Matrix` class provides a robust implementation for matrix operations in PHP, supporting various mathematical operations and transformations commonly used in linear algebra, computer graphics, and scientific computing.
+
+#### Features
+
+- Basic matrix operations (addition, subtraction, multiplication)
+- Scalar multiplication
+- Matrix transposition
+- Determinant calculation
+- Identity and zero matrix creation
+- Row and column access
+- Input validation and error handling
+
+#### Basic Usage
+
+```php
+use Daedalus\Matrix;
+
+// Create a 2x2 matrix
+$matrix1 = new Matrix([
+    [1, 2],
+    [3, 4]
+]);
+
+// Create another 2x2 matrix
+$matrix2 = new Matrix([
+    [5, 6],
+    [7, 8]
+]);
+
+// Matrix addition
+$sum = $matrix1->add($matrix2);
+
+// Matrix multiplication
+$product = $matrix1->multiply($matrix2);
+
+// Scale matrix
+$scaled = $matrix1->scale(2);
+
+// Get determinant
+$det = $matrix1->determinant();
+
+// Create special matrices
+$identity = Matrix::identity(3); // 3x3 identity matrix
+$zero = Matrix::zero(2, 3);     // 2x3 zero matrix
+```
+
+#### Advanced Operations
+
+```php
+// Matrix transposition
+$matrix = new Matrix([
+    [1, 2, 3],
+    [4, 5, 6]
+]);
+$transposed = $matrix->transpose();
+
+// Access and modify elements
+$value = $matrix->get(0, 1);    // Get element at row 0, column 1
+$matrix->set(1, 2, 10);         // Set element at row 1, column 2
+
+// Get matrix properties
+$rows = $matrix->getRows();     // Number of rows
+$cols = $matrix->getCols();     // Number of columns
+```
+
+#### Real-World Use Cases
+
+1. Scientific Computing
+   - Solving systems of linear equations
+   - Statistical calculations
+   - Data transformations
+   - Numerical analysis
+
+2. Computer Graphics
+   - 2D/3D transformations
+   - Image processing
+   - Game development
+   - Animation calculations
+
+3. Machine Learning
+   - Feature transformation
+   - Covariance matrices
+   - Principal Component Analysis
+   - Neural network calculations
+
+4. Financial Applications
+   - Portfolio optimization
+   - Risk analysis
+   - Asset correlation matrices
+   - Time series analysis
+
+5. Engineering Applications
+   - Structural analysis
+   - Circuit calculations
+   - Signal processing
+   - Control systems
+
+#### Performance Considerations
+
+- Efficient implementation for basic operations
+- Optimized memory usage
+- Input validation for matrix compatibility
+- Exception handling for invalid operations
+- Type safety for numeric operations
+
 ### Enhanced Array Object
 
 A PHP library that provides an enhanced version of PHP's ArrayObject with additional features like type safety, event handling, immutability options, and a PSR-11 compliant dependency injection container.

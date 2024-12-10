@@ -16,13 +16,6 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
-        <report>
-            <html outputDirectory="coverage"/>
-            <clover outputFile="coverage.xml"/>
-        </report>
-    </coverage>
-
     <source>
         <include>
             <directory>src</directory>
