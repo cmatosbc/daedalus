@@ -4,7 +4,8 @@ namespace Daedalus;
 
 use Exception;
 
-class Matrix {
+class Matrix
+{
     private array $data;
     private int $rows;
     private int $cols;
@@ -15,7 +16,8 @@ class Matrix {
      * @param array $data Two-dimensional array of numeric values
      * @throws \InvalidArgumentException If the input array is not valid
      */
-    public function __construct(array $data) {
+    public function __construct(array $data)
+    {
         $this->validateInput($data);
         $this->data = $data;
         $this->rows = count($data);
@@ -28,7 +30,8 @@ class Matrix {
      * @param array $data
      * @throws \InvalidArgumentException
      */
-    private function validateInput(array $data): void {
+    private function validateInput(array $data): void
+    {
         if (empty($data) || !is_array($data[0])) {
             throw new \InvalidArgumentException('Matrix must be a non-empty 2D array');
         }
@@ -53,7 +56,8 @@ class Matrix {
      * @return Matrix
      * @throws \InvalidArgumentException
      */
-    public function add(Matrix $other): Matrix {
+    public function add(Matrix $other): Matrix
+    {
         if ($this->rows !== $other->rows || $this->cols !== $other->cols) {
             throw new \InvalidArgumentException('Matrices must have the same dimensions for addition');
         }
@@ -75,7 +79,8 @@ class Matrix {
      * @return Matrix
      * @throws \InvalidArgumentException
      */
-    public function subtract(Matrix $other): Matrix {
+    public function subtract(Matrix $other): Matrix
+    {
         if ($this->rows !== $other->rows || $this->cols !== $other->cols) {
             throw new \InvalidArgumentException('Matrices must have the same dimensions for subtraction');
         }
@@ -97,9 +102,12 @@ class Matrix {
      * @return Matrix
      * @throws \InvalidArgumentException
      */
-    public function multiply(Matrix $other): Matrix {
+    public function multiply(Matrix $other): Matrix
+    {
         if ($this->cols !== $other->rows) {
-            throw new \InvalidArgumentException('Number of columns in first matrix must equal number of rows in second');
+            throw new \InvalidArgumentException(
+                'Number of columns in first matrix must equal number of rows in second'
+            );
         }
 
         $result = [];
@@ -122,7 +130,8 @@ class Matrix {
      * @param float|int $scalar
      * @return Matrix
      */
-    public function scale($scalar): Matrix {
+    public function scale($scalar): Matrix
+    {
         if (!is_numeric($scalar)) {
             throw new \InvalidArgumentException('Scalar must be numeric');
         }
@@ -142,7 +151,8 @@ class Matrix {
      *
      * @return Matrix
      */
-    public function transpose(): Matrix {
+    public function transpose(): Matrix
+    {
         $result = [];
         for ($i = 0; $i < $this->cols; $i++) {
             for ($j = 0; $j < $this->rows; $j++) {
@@ -159,7 +169,8 @@ class Matrix {
      * @return float|int
      * @throws \InvalidArgumentException If matrix is not square
      */
-    public function determinant() {
+    public function determinant()
+    {
         if ($this->rows !== $this->cols) {
             throw new \InvalidArgumentException('Determinant can only be calculated for square matrices');
         }
@@ -187,7 +198,8 @@ class Matrix {
      * @param int $col
      * @return float|int
      */
-    private function cofactor(int $row, int $col) {
+    private function cofactor(int $row, int $col)
+    {
         return (($row + $col) % 2 ? -1 : 1) * $this->minor($row, $col);
     }
 
@@ -198,14 +210,19 @@ class Matrix {
      * @param int $col
      * @return float|int
      */
-    private function minor(int $row, int $col) {
+    private function minor(int $row, int $col)
+    {
         $minor = [];
         $m = 0;
         for ($i = 0; $i < $this->rows; $i++) {
-            if ($i === $row) continue;
+            if ($i === $row) {
+                continue;
+            }
             $n = 0;
             for ($j = 0; $j < $this->cols; $j++) {
-                if ($j === $col) continue;
+                if ($j === $col) {
+                    continue;
+                }
                 $minor[$m][$n] = $this->data[$i][$j];
                 $n++;
             }
@@ -223,7 +240,8 @@ class Matrix {
      * @return mixed
      * @throws \OutOfBoundsException
      */
-    public function get(int $row, int $col) {
+    public function get(int $row, int $col)
+    {
         if ($row < 0 || $row >= $this->rows || $col < 0 || $col >= $this->cols) {
             throw new \OutOfBoundsException('Matrix position out of bounds');
         }
@@ -238,7 +256,8 @@ class Matrix {
      * @param float|int $value
      * @throws \OutOfBoundsException
      */
-    public function set(int $row, int $col, $value): void {
+    public function set(int $row, int $col, $value): void
+    {
         if ($row < 0 || $row >= $this->rows || $col < 0 || $col >= $this->cols) {
             throw new \OutOfBoundsException('Matrix position out of bounds');
         }
@@ -253,7 +272,8 @@ class Matrix {
      *
      * @return int
      */
-    public function getRows(): int {
+    public function getRows(): int
+    {
         return $this->rows;
     }
 
@@ -262,7 +282,8 @@ class Matrix {
      *
      * @return int
      */
-    public function getCols(): int {
+    public function getCols(): int
+    {
         return $this->cols;
     }
 
@@ -271,7 +292,8 @@ class Matrix {
      *
      * @return array
      */
-    public function getData(): array {
+    public function getData(): array
+    {
         return $this->data;
     }
 
@@ -282,7 +304,8 @@ class Matrix {
      * @return Matrix
      * @throws \InvalidArgumentException
      */
-    public static function identity(int $size): Matrix {
+    public static function identity(int $size): Matrix
+    {
         if ($size <= 0) {
             throw new \InvalidArgumentException('Size must be positive');
         }
@@ -303,7 +326,8 @@ class Matrix {
      * @return Matrix
      * @throws \InvalidArgumentException
      */
-    public static function zero(int $rows, int $cols): Matrix {
+    public static function zero(int $rows, int $cols): Matrix
+    {
         if ($rows <= 0 || $cols <= 0) {
             throw new \InvalidArgumentException('Dimensions must be positive');
         }
