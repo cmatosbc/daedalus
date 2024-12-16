@@ -16,26 +16,54 @@ class ContainerArrayObjectTest extends TestCase
         $this->container = new ContainerArrayObject();
     }
 
-    public function testPsrCompliance()
+    /**
+     * @testdox Implements PSR-11 Container Interface
+     */
+    public function testPsrCompliance(): void
     {
-        $this->assertInstanceOf(ContainerInterface::class, $this->container);
+        $this->assertInstanceOf(
+            ContainerInterface::class,
+            $this->container,
+            'Should implement PSR-11 ContainerInterface'
+        );
     }
 
-    public function testBasicBinding()
+    /**
+     * @testdox Can bind and retrieve basic values
+     */
+    public function testBasicBinding(): void
     {
         $this->container->bind('key', 'value');
-        $this->assertTrue($this->container->has('key'));
-        $this->assertEquals('value', $this->container->get('key'));
+        
+        $this->assertTrue(
+            $this->container->has('key'),
+            'Should detect bound key'
+        );
+        $this->assertEquals(
+            'value',
+            $this->container->get('key'),
+            'Should retrieve bound value'
+        );
     }
 
-    public function testMissingEntry()
+    /**
+     * @testdox Throws exception for missing entries
+     */
+    public function testMissingEntry(): void
     {
-        $this->assertFalse($this->container->has('missing'));
+        $this->assertFalse(
+            $this->container->has('nonexistent'),
+            'Should return false for non-existent key'
+        );
+        
         $this->expectException(NotFoundExceptionInterface::class);
-        $this->container->get('missing');
+        $this->container->get('nonexistent');
     }
 
-    public function testSingletonRegistration()
+    /**
+     * @testdox Maintains singleton instances
+     */
+    public function testSingletonRegistration(): void
     {
         $obj = new \stdClass();
         $obj->value = 'test';
@@ -45,10 +73,17 @@ class ContainerArrayObjectTest extends TestCase
         $instance1 = $this->container->get('instance');
         $instance2 = $this->container->get('instance');
         
-        $this->assertSame($instance1, $instance2);
+        $this->assertSame(
+            $instance1,
+            $instance2,
+            'Should return same instance for singleton'
+        );
     }
 
-    public function testFactoryFunction()
+    /**
+     * @testdox Supports factory functions for instance creation
+     */
+    public function testFactoryFunction(): void
     {
         $count = 0;
         $this->container->bind('factory', function() use (&$count) {
@@ -60,12 +95,19 @@ class ContainerArrayObjectTest extends TestCase
         $instance1 = $this->container->get('factory');
         $instance2 = $this->container->get('factory');
         
-        $this->assertNotSame($instance1, $instance2);
+        $this->assertNotSame(
+            $instance1,
+            $instance2,
+            'Should return new instance each time for factory'
+        );
         $this->assertEquals(1, $instance1->count);
         $this->assertEquals(2, $instance2->count);
     }
 
-    public function testSingletonFactory()
+    /**
+     * @testdox Supports singleton factory with dependencies
+     */
+    public function testSingletonFactory(): void
     {
         $count = 0;
         $this->container->singleton('singleton.factory', function() use (&$count) {
@@ -77,12 +119,19 @@ class ContainerArrayObjectTest extends TestCase
         $instance1 = $this->container->get('singleton.factory');
         $instance2 = $this->container->get('singleton.factory');
         
-        $this->assertSame($instance1, $instance2);
+        $this->assertSame(
+            $instance1,
+            $instance2,
+            'Should return same instance for singleton factory'
+        );
         $this->assertEquals(1, $instance1->count);
         $this->assertEquals(1, $instance2->count);
     }
 
-    public function testAutomaticDependencyInjection()
+    /**
+     * @testdox Automatically injects container into factory functions
+     */
+    public function testAutomaticDependencyInjection(): void
     {
         // Define test classes in correct order (dependencies first)
         $this->container->bind(Config::class, Config::class);
@@ -92,22 +141,48 @@ class ContainerArrayObjectTest extends TestCase
 
         $repo = $this->container->get(UserRepository::class);
         
-        $this->assertInstanceOf(UserRepository::class, $repo);
-        $this->assertInstanceOf(Database::class, $repo->getDatabase());
-        $this->assertInstanceOf(Logger::class, $repo->getLogger());
+        $this->assertInstanceOf(
+            UserRepository::class,
+            $repo,
+            'Should resolve all dependencies in chain'
+        );
+        $this->assertInstanceOf(
+            Database::class,
+            $repo->getDatabase(),
+            'Should resolve all dependencies in chain'
+        );
+        $this->assertInstanceOf(
+            Logger::class,
+            $repo->getLogger(),
+            'Should resolve all dependencies in chain'
+        );
     }
 
-    public function testInterfaceBinding()
+    /**
+     * @testdox Can bind interfaces to implementations
+     */
+    public function testInterfaceBinding(): void
     {
         $this->container->bind(PaymentGatewayInterface::class, StripeGateway::class);
         
         $gateway = $this->container->get(PaymentGatewayInterface::class);
         
-        $this->assertInstanceOf(PaymentGatewayInterface::class, $gateway);
-        $this->assertInstanceOf(StripeGateway::class, $gateway);
+        $this->assertInstanceOf(
+            PaymentGatewayInterface::class,
+            $gateway,
+            'Should resolve interface to correct implementation'
+        );
+        $this->assertInstanceOf(
+            StripeGateway::class,
+            $gateway,
+            'Should resolve interface to correct implementation'
+        );
     }
 
-    public function testClearInstances()
+    /**
+     * @testdox Can clear cached instances
+     */
+    public function testClearInstances(): void
     {
         $obj = new \stdClass();
         $obj->value = 'test';
@@ -120,16 +195,34 @@ class ContainerArrayObjectTest extends TestCase
         $instance2 = $this->container->get('singleton');
         
         // Verify that the singleton binding still exists but returns a new instance
-        $this->assertTrue($this->container->isSingleton('singleton'));
-        $this->assertNotSame($instance1, $instance2);
-        $this->assertEquals($instance1->value, $instance2->value);
+        $this->assertTrue(
+            $this->container->isSingleton('singleton'),
+            'Should still be a singleton after clearing instances'
+        );
+        $this->assertNotSame(
+            $instance1,
+            $instance2,
+            'Should return new instance after clearing cache'
+        );
+        $this->assertEquals(
+            $instance1->value,
+            $instance2->value,
+            'Should return new instance after clearing cache'
+        );
         
         // Verify that subsequent gets return the same instance
         $instance3 = $this->container->get('singleton');
-        $this->assertSame($instance2, $instance3);
+        $this->assertSame(
+            $instance2,
+            $instance3,
+            'Should return same instance after clearing cache'
+        );
     }
 
-    public function testNestedDependencies()
+    /**
+     * @testdox Resolves nested dependencies correctly
+     */
+    public function testNestedDependencies(): void
     {
         $this->container->bind(Config::class, Config::class);
         $this->container->bind(Database::class, Database::class);
@@ -138,10 +231,26 @@ class ContainerArrayObjectTest extends TestCase
 
         $service = $this->container->get(UserService::class);
         
-        $this->assertInstanceOf(UserService::class, $service);
-        $this->assertInstanceOf(Database::class, $service->getDatabase());
-        $this->assertInstanceOf(Cache::class, $service->getCache());
-        $this->assertInstanceOf(Config::class, $service->getDatabase()->getConfig());
+        $this->assertInstanceOf(
+            UserService::class,
+            $service,
+            'Should resolve all dependencies in chain'
+        );
+        $this->assertInstanceOf(
+            Database::class,
+            $service->getDatabase(),
+            'Should resolve all dependencies in chain'
+        );
+        $this->assertInstanceOf(
+            Cache::class,
+            $service->getCache(),
+            'Should resolve all dependencies in chain'
+        );
+        $this->assertInstanceOf(
+            Config::class,
+            $service->getDatabase()->getConfig(),
+            'Should resolve all dependencies in chain'
+        );
     }
 }
 

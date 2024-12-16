@@ -14,14 +14,29 @@ class TreeSetTest extends TestCase
         $this->set = new TreeSet();
     }
 
+    /**
+     * @testdox Can add elements and verify their existence in the set
+     */
     public function testAddAndContains(): void
     {
-        $this->assertTrue($this->set->add(5));
-        $this->assertTrue($this->set->contains(5));
-        $this->assertFalse($this->set->add(5)); // Adding duplicate
+        $this->assertTrue(
+            $this->set->add(5),
+            'Should successfully add new element'
+        );
+        $this->assertTrue(
+            $this->set->contains(5),
+            'Should find added element'
+        );
+        $this->assertFalse(
+            $this->set->add(5),
+            'Should not add duplicate element'
+        );
         $this->assertEquals(1, $this->set->count());
     }
 
+    /**
+     * @testdox Maintains elements in sorted order during insertion
+     */
     public function testOrderedInsertion(): void
     {
         $numbers = [5, 3, 7, 1, 9, 2, 8, 4, 6];
@@ -33,6 +48,9 @@ class TreeSetTest extends TestCase
         $this->assertEquals($expected, $this->set->toArray());
     }
 
+    /**
+     * @testdox Can retrieve first and last elements in sorted order
+     */
     public function testFirstAndLast(): void
     {
         $numbers = [5, 3, 7, 1, 9];
@@ -44,6 +62,9 @@ class TreeSetTest extends TestCase
         $this->assertEquals(9, $this->set->last());
     }
 
+    /**
+     * @testdox Can find elements lower and higher than a given value
+     */
     public function testLowerAndHigher(): void
     {
         $numbers = [5, 3, 7, 1, 9];
@@ -57,6 +78,9 @@ class TreeSetTest extends TestCase
         $this->assertEquals(null, $this->set->higher(9));
     }
 
+    /**
+     * @testdox Can remove elements while maintaining order
+     */
     public function testRemove(): void
     {
         $numbers = [5, 3, 7];
@@ -69,6 +93,9 @@ class TreeSetTest extends TestCase
         $this->assertFalse($this->set->remove(3)); // Already removed
     }
 
+    /**
+     * @testdox Can clear all elements from the set
+     */
     public function testClear(): void
     {
         $numbers = [5, 3, 7];
@@ -82,6 +109,9 @@ class TreeSetTest extends TestCase
         $this->assertNull($this->set->last());
     }
 
+    /**
+     * @testdox Can iterate over elements in sorted order
+     */
     public function testIterator(): void
     {
         $numbers = [5, 3, 7, 1, 9];
@@ -97,6 +127,9 @@ class TreeSetTest extends TestCase
         $this->assertEquals([1, 3, 5, 7, 9], $result);
     }
 
+    /**
+     * @testdox Can maintain order with custom object comparisons
+     */
     public function testObjectOrdering(): void
     {
         $obj1 = new class {
@@ -117,6 +150,9 @@ class TreeSetTest extends TestCase
         $this->assertEquals(["1", "2", "3"], $result);
     }
 
+    /**
+     * @testdox Handles operations on empty set correctly
+     */
     public function testEmptySetOperations(): void
     {
         $this->assertNull($this->set->first());
@@ -127,6 +163,9 @@ class TreeSetTest extends TestCase
         $this->assertEquals([], $this->set->toArray());
     }
 
+    /**
+     * @testdox Maintains balance during insertions and deletions
+     */
     public function testBalancing(): void
     {
         // Test AVL tree balancing with sequential insertions
