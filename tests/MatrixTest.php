@@ -8,7 +8,7 @@ use Daedalus\Matrix;
 class MatrixTest extends TestCase
 {
     /**
-     * @test
+     * @testdox Can construct a valid matrix with proper dimensions
      */
     public function testMatrixConstruction()
     {
@@ -19,13 +19,13 @@ class MatrixTest extends TestCase
         ];
         $matrix = new Matrix($data);
         
-        $this->assertEquals(3, $matrix->getRows());
-        $this->assertEquals(3, $matrix->getCols());
-        $this->assertEquals($data, $matrix->getData());
+        $this->assertEquals(3, $matrix->getRows(), 'Matrix should have 3 rows');
+        $this->assertEquals(3, $matrix->getCols(), 'Matrix should have 3 columns');
+        $this->assertEquals($data, $matrix->getData(), 'Matrix data should match input array');
     }
 
     /**
-     * @test
+     * @testdox Throws exception when constructing matrix with inconsistent dimensions
      */
     public function testInvalidMatrixConstruction()
     {
@@ -37,7 +37,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
+     * @testdox Can perform matrix addition with compatible matrices
      */
     public function testMatrixAddition()
     {
@@ -49,11 +49,15 @@ class MatrixTest extends TestCase
             [6, 8],
             [10, 12]
         ];
-        $this->assertEquals($expected, $result->getData());
+        $this->assertEquals(
+            $expected,
+            $result->getData(),
+            'Matrix addition should add corresponding elements'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can perform matrix subtraction with compatible matrices
      */
     public function testMatrixSubtraction()
     {
@@ -65,11 +69,15 @@ class MatrixTest extends TestCase
             [4, 4],
             [4, 4]
         ];
-        $this->assertEquals($expected, $result->getData());
+        $this->assertEquals(
+            $expected,
+            $result->getData(),
+            'Matrix subtraction should subtract corresponding elements'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can perform matrix multiplication with compatible matrices
      */
     public function testMatrixMultiplication()
     {
@@ -81,11 +89,15 @@ class MatrixTest extends TestCase
             [4, 4],
             [10, 8]
         ];
-        $this->assertEquals($expected, $result->getData());
+        $this->assertEquals(
+            $expected,
+            $result->getData(),
+            'Matrix multiplication should follow the matrix product rule'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can scale a matrix by a scalar value
      */
     public function testMatrixScaling()
     {
@@ -96,11 +108,15 @@ class MatrixTest extends TestCase
             [2, 4],
             [6, 8]
         ];
-        $this->assertEquals($expected, $result->getData());
+        $this->assertEquals(
+            $expected,
+            $result->getData(),
+            'Matrix scaling should multiply each element by the scalar'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can transpose a matrix by switching rows and columns
      */
     public function testMatrixTranspose()
     {
@@ -112,17 +128,25 @@ class MatrixTest extends TestCase
             [2, 5],
             [3, 6]
         ];
-        $this->assertEquals($expected, $result->getData());
+        $this->assertEquals(
+            $expected,
+            $result->getData(),
+            'Matrix transpose should switch rows and columns'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can calculate determinant for 2x2 and 3x3 matrices
      */
     public function testDeterminant()
     {
         // 2x2 matrix
         $matrix1 = new Matrix([[4, 3], [2, 1]]);
-        $this->assertEquals(-2, $matrix1->determinant());
+        $this->assertEquals(
+            -2,
+            $matrix1->determinant(),
+            'Should correctly calculate 2x2 matrix determinant'
+        );
 
         // 3x3 matrix
         $matrix2 = new Matrix([
@@ -130,11 +154,15 @@ class MatrixTest extends TestCase
             [4, 5, 6],
             [7, 8, 9]
         ]);
-        $this->assertEquals(0, $matrix2->determinant());
+        $this->assertEquals(
+            0,
+            $matrix2->determinant(),
+            'Should correctly calculate 3x3 matrix determinant'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can create identity matrix of specified size
      */
     public function testIdentityMatrix()
     {
@@ -144,11 +172,15 @@ class MatrixTest extends TestCase
             [0, 1, 0],
             [0, 0, 1]
         ];
-        $this->assertEquals($expected, $identity->getData());
+        $this->assertEquals(
+            $expected,
+            $identity->getData(),
+            'Identity matrix should have 1s on diagonal and 0s elsewhere'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can create zero matrix of specified dimensions
      */
     public function testZeroMatrix()
     {
@@ -157,27 +189,29 @@ class MatrixTest extends TestCase
             [0, 0, 0],
             [0, 0, 0]
         ];
-        $this->assertEquals($expected, $zero->getData());
+        $this->assertEquals(
+            $expected,
+            $zero->getData(),
+            'Zero matrix should contain all zeros'
+        );
     }
 
     /**
-     * @test
+     * @testdox Can get and set individual matrix elements
      */
     public function testGetAndSet()
     {
         $matrix = new Matrix([[1, 2], [3, 4]]);
         
-        // Test get
-        $this->assertEquals(1, $matrix->get(0, 0));
-        $this->assertEquals(4, $matrix->get(1, 1));
+        $this->assertEquals(1, $matrix->get(0, 0), 'Should retrieve correct value from first element');
+        $this->assertEquals(4, $matrix->get(1, 1), 'Should retrieve correct value from last element');
         
-        // Test set
         $matrix->set(0, 1, 5);
-        $this->assertEquals(5, $matrix->get(0, 1));
+        $this->assertEquals(5, $matrix->get(0, 1), 'Should update and retrieve modified value');
     }
 
     /**
-     * @test
+     * @testdox Throws exception when accessing invalid row index
      */
     public function testInvalidGetAccess()
     {
@@ -187,7 +221,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
+     * @testdox Throws exception when setting value at invalid column index
      */
     public function testInvalidSetAccess()
     {
@@ -197,7 +231,7 @@ class MatrixTest extends TestCase
     }
 
     /**
-     * @test
+     * @testdox Throws exception when calculating determinant of non-square matrix
      */
     public function testInvalidDeterminant()
     {
